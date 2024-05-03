@@ -42,6 +42,7 @@ function check_potential(){
 	if(ds_list_size(potential_list)<=2 || ds_list_size(potential_list)>5){
 		show_debug_message("Invalid Hand!");
 		event_result = 0;
+		return event_result;
 		order_list(playable_list,playable_xpos,playable_ypos)
 		order_list(player_list,player_xpos,player_ypos);
 	}else{
@@ -54,6 +55,7 @@ function check_potential(){
 				if (potential_list[|i].suit != straight_suit || potential_list[|i].rank != straight_rank+1){
 					
 					show_debug_message("Invalid Hand!");
+					return 0;
 					order_list(playable_list,playable_xpos,playable_ypos)
 					order_list(player_list,player_xpos,player_ypos);
 					break;
@@ -75,6 +77,7 @@ function check_potential(){
 				//check if every card in potential have same suit and rank
 				if (potential_list[|i].suit != kong_suit || potential_list[|i].rank != kong_rank){
 					show_debug_message("Invalid Hand!");
+					return 0;
 					order_list(playable_list,playable_xpos,playable_ypos)
 					order_list(player_list,player_xpos,player_ypos);
 					break;

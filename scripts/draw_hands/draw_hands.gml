@@ -1,8 +1,12 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function draw_hands(_amount){
+	
 	//simply draw to player hands
 	for (var _i = 0; _i < _amount; _i++){
+		if(ds_list_size(deck_list)==0){
+			room_restart();
+		}
 		//draw from last
 		var _card_drawn = deck_list[|ds_list_size(deck_list)-1];
 		//now card should face up

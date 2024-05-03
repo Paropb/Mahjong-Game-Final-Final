@@ -66,33 +66,55 @@
 		game_state = "discard";
 		UpdateUI();
 	}
-	function DrawPlayable()
+	function DiscardPlayable()
 	{
-		
+		discard_playable();
+		should_draw = true;
+		game_state = "play";
 	}
 	function PlayCard()
 	{
 		global.multi_select_player = true;
 			var tmp_result = check_potential();
-			//switch(tmp_result){
-			//	//nothing happen
-			//	case 0:
+			show_debug_message(string(tmp_result));
+			switch(tmp_result){
+				//nothing happen
+				case 0:
+					deselect_player();
+					deselect_playable();
+					find_potential();
+					//game_state = "play";
+					break;
+				case 1:
+					//kong
+					draw_hands(3);
+					discard_playable();
+					should_draw = true;
+					game_state = "play";
 					
-			//		break;
-			//	case 1:
-			//		game_state = "draw";
-			//		break;
-			//	case 2: 
-			//		global.multi_select_player = false;
-			//		game_state = "discard";
-			//		break;
-			//	case 3:
-			//		game_state = "draw2";
-			//		break;
-			//}
-			draw_hands(draw_amount);
+					break;
+				case 2: 
+					//pung or chow
+					//global.multi_select_player = false;
+					draw_hands(2);
+					discard_playable();
+					should_draw = true;
+					game_state = "play";
+					
+					break;
+				case 3:
+				
+					draw_hands(4);
+					discard_playable();
+					should_draw = true;
+					game_state = "play";
+					
+					break;
+			}
+			
+			/*draw_hands(draw_amount);
 			discard_playable();
-			game_state = "play";
+			game_state = "play";*/
 
 		UpdateUI();
 	}
@@ -101,15 +123,20 @@
 		var draw_amt = 0;
 
 		for (var _i = ds_list_size(player_list)-1; _i >= 0; _i--){
-		if(player_list[|_i].selected){
-			draw_amt++;
+			if(player_list[|_i].selected){
+				draw_amt++;
+			}
 		}
+		if(draw_amt<=5){
+			discard_selected();
+			global.multi_select_player = true;
+			game_state = "play";
+			draw_hands(draw_amt);
+		}else{
+			deselect_player();
 		}
 		
-		discard_selected();
-		global.multi_select_player = true;
-		game_state = "play";
-		draw_hands(draw_amt);
+		
 		UpdateUI();
 	}
 	function OpenShop()
@@ -127,8 +154,9 @@ draw_set_color(c_white);
 //keep track of game state
 game_state = "decision";
 game_score= 0;
-needed_score = 1000;
+needed_score = 1500;
 
+should_draw = true;
 
 straight_score = 800;
 kong_score = 600;

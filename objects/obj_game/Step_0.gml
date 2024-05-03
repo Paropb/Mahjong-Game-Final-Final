@@ -3,6 +3,10 @@ if(game_score>=needed_score){
 	room_goto(l_room_start_menu);
 }
 
+if(keyboard_check_pressed(vk_escape)){
+	DiscardPlayable();
+}
+
 if(keyboard_check_pressed(ord("S"))){
 	order_list(player_list,player_xpos,player_ypos);
 }
@@ -72,10 +76,14 @@ switch(game_state){
 	//show all potential card
 	//wait for player to respond
 	
-	
 	case "play":
-		draw_playable(playable_amount);
-
+		deselect_playable();
+		//deselect_player();
+		if(should_draw){
+			draw_playable(playable_amount);
+		}
+		find_potential();
+		should_draw = false;
 		for(var _i=0; _i<ds_list_size(playable_list);_i++){
 			var _current = playable_list[|_i];
 			//check adjacency
@@ -95,7 +103,7 @@ switch(game_state){
 				ds_list_destroy(_check_player_list);
 			}
 		}
-		find_potential();
+		
 		game_state = "wait_play";
 		UpdateUI();
 		break;
@@ -132,10 +140,7 @@ switch(game_state){
 					break;
 			}
 		}
-		if(keyboard_check_pressed(vk_escape)){
-			discard_playable();
-			game_state = "decision";
-		}
+			
 		break;
 	//draw state, draw one and discard 1
 	case "draw":

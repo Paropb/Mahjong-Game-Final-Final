@@ -6,6 +6,10 @@ function PlayBGM(){
 	var ins_sound2 = audio_play_sound(snd_bg_noise, 1, true, 0.5);
 	audio_sound_loop(ins_sound2, true);
 }
+function StopBGM()
+{
+	audio_stop_all();
+}
 function PlayMahjongPlaySFX()
 {
 	audio_play_sound(snd_mahjong_play, 1, false, 1, 0, 1.2);

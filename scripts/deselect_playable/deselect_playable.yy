@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"deselect_playable",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"deselect_playable",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
